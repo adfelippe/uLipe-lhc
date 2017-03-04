@@ -11,9 +11,14 @@
 
 
 /* reserve space for stack used on threads in words */
-uint32_t led_stk[192];
-uint32_t touch_stk[192];
+//uint32_t led_stk[192];
+//uint32_t touch_stk[192];
 uint32_t dly_stk[64];
+uint32_t blink_stk[128];
+
+/* Define initial task priorities */
+#define BLINK_TASK_PRIO		4
+#define DLY_TASK_PRIO 		3
 
 /* various kernel objects used in this demo */
 OsHandler_t sema;
@@ -41,7 +46,17 @@ static void dly_task(void *args)
     for(;;){
     	(void)0;
         uLipeTaskDelay(10);
+        uLipeTaskSuspend(DLY_TASK_PRIO);
     }
+}
+
+static void blink_led(void)
+{
+	while(1)
+	{
+		//Do stuff to blink LED
+		uLipeTaskResume(DLY_TASK_PRIO);
+	}
 }
 
 
@@ -183,7 +198,8 @@ int main(void)
 
     //uLipeTaskCreate(&led_task,&led_stk[0],128,1,NULL);
     //uLipeTaskCreate(&touch_task,&touch_stk[0],128,4,NULL);
-    uLipeTaskCreate(&dly_task, &dly_stk[0], 64, 3, NULL);
+    uLipeTaskCreate(&dly_task, &dly_stk[0], 64, DLY_TASK_PRIO, NULL);
+    uLipeTaskCreate(&blink_led, &blink_stk[0], 128, BLINK_TASK_PRIO, NULL);
 
     //que = uLipeQueueCreate(qdata,1,NULL);
     //sema = uLipeSemCreate(0,1,NULL);

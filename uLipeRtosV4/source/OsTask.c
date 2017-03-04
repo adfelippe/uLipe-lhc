@@ -167,7 +167,7 @@ OsStatus_t uLipeTaskSuspend( uint16_t taskPrio)
 	if(taskTbl[taskPrio].tcbTaken == FALSE) return(kInvalidParam);					//Task is deleted cant suspend
 	if(!(taskTbl[taskPrio].taskStatus & (1 << kTaskReady)))return(kCantSuspend);	//Only ready tasks can suspended
 
-/*
+
 	OS_CRITICAL_IN();
 
 	//First remove this task from ready list:
@@ -178,7 +178,7 @@ OsStatus_t uLipeTaskSuspend( uint16_t taskPrio)
 	OS_CRITICAL_OUT();
 
 	uLipeKernelTaskYield();
-*/
+
 	return(kStatusOk);
 
 }
@@ -192,7 +192,7 @@ OsStatus_t uLipeTaskResume( uint16_t taskPrio)
 
 	//Check arguments:
 	if(taskTbl[taskPrio].tcbTaken == FALSE) return(kInvalidParam);					//Task is deleted cant suspend
-/*
+
 	OS_CRITICAL_IN();
 
 	//Pute the suspended task in ready list:
@@ -208,7 +208,7 @@ OsStatus_t uLipeTaskResume( uint16_t taskPrio)
 	OS_CRITICAL_OUT();
 
 	uLipeKernelTaskYield();
-*/
+
 	return(kStatusOk);
 }
 
