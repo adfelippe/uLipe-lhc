@@ -1,0 +1,7 @@
+Exercício 1
+
+- Implementar taskSuspend e taskResume
+- Criar uma nova task (com o próprio delay), implementando suspend e resume
+- Deixar todas as tasks rodando (as 2 criadas)
+- Task A deve suspender (de maior prioridade)
+- Task B deve dar resume na task A (task B deve ser de menor prioridade)
